@@ -191,10 +191,11 @@ def _get_git_url_if_present(uri):
             git_path = repo_url + '#' + rlpath[1:]
         else:
             git_path = repo_url + '#' + rlpath
+        print("Git path is: %s" % git_path)
         return git_path
     except (InvalidGitRepositoryError, GitCommandNotFound, ValueError, NoSuchPathError):
         return uri
-print("Git path is: %s" % git_path)
+
 
 def eval_metrics(actual, pred):
     rmse = np.sqrt(mean_squared_error(actual, pred))
