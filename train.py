@@ -2,9 +2,6 @@
 # P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis.
 # Modeling wine preferences by data mining from physicochemical properties. In Decision Support Systems, Elsevier, 47(4):547-553, 2009.
 
-
-from __future__ import print_function
-
 import os
 import warnings
 import sys
@@ -17,6 +14,17 @@ from sklearn.linear_model import ElasticNet
 
 import mlflow
 import mlflow.sklearn
+
+
+def eval_metrics(actual, pred):
+    rmse = np.sqrt(mean_squared_error(actual, pred))
+    mae = mean_absolute_error(actual, pred)
+    r2 = r2_score(actual, pred)
+    return rmse, mae, r2
+
+'''
+from __future__ import print_function
+
 import os
 import sys
 
@@ -55,7 +63,9 @@ def set_tracking_uri(uri):
     """
     Set the tracking server URI. This does not affect the
     currently active run (if one exists), but takes effect for successive runs.
+
     :param uri:
+
                 - An empty string, or a local file path, prefixed with ``file:/``. Data is stored
                   locally at the provided file (or ``./mlruns`` if empty).
                 - An HTTP URI like ``https://my-tracking-server:5000``.
@@ -72,6 +82,7 @@ def get_tracking_uri():
     """
     Get the current tracking URI. This may not correspond to the tracking URI of
     the currently active run, since the tracking URI can be updated via ``set_tracking_uri``.
+
     :return: The tracking URI.
     """
     global _tracking_uri
@@ -191,18 +202,12 @@ def _get_git_url_if_present(uri):
             git_path = repo_url + '#' + rlpath[1:]
         else:
             git_path = repo_url + '#' + rlpath
-        print("Git path is: %s" % git_path)
         return git_path
     except (InvalidGitRepositoryError, GitCommandNotFound, ValueError, NoSuchPathError):
         return uri
 
 
-def eval_metrics(actual, pred):
-    rmse = np.sqrt(mean_squared_error(actual, pred))
-    mae = mean_absolute_error(actual, pred)
-    r2 = r2_score(actual, pred)
-    return rmse, mae, r2
-
+'''
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
@@ -236,7 +241,6 @@ if __name__ == "__main__":
         print("  RMSE: %s" % rmse)
         print("  MAE: %s" % mae)
         print("  R2: %s" % r2)
-
 
         mlflow.log_param("alpha", alpha)
         mlflow.log_param("l1_ratio", l1_ratio)
